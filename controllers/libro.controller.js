@@ -1,5 +1,5 @@
 const Libro = require("../models/libro.model");
-const cloudinary = require('../config/Cloudinary');
+const cloudinary = require('../config/cloudinary');
 
 class LibroController {
   static prepararDatosLibro = (data) => {
