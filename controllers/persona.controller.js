@@ -1,0 +1,81 @@
+const Persona = require("../models/personas.model");
+const cloudinary = require('../config/cloudinary');
+
+class PersonaController {
+  static createPersona = async (req, res) => {
+    try {
+      const datos = req.body;
+      const newPerson = await Persona.create(datos);
+      res.status(201).json(newPerson);
+    } catch (error) {
+      return console.log(error.error);
+    }
+  };
+
+  static obtenerDatos = async (req, res) => {
+    try {
+      const buscarPersonas = await Persona.find();
+      res.status(200).json(buscarPersonas);
+    } catch (error) {
+      return console.log(error.error);
+    }
+  };
+
+  static deletePersona = async (req, res) => {
+    try {
+      const { id } = req.params;
+      const eliminar = await Persona.findByIdAndDelete(id);
+      res.status(200).json(eliminar);
+    } catch (error) {
+      return console.log(error.error);
+    }
+  };
+
+  static updatePersona = async (req, res) => {
+    try {
+      const { id } = req.params;
+      const modPersona = req.body;
+      const modificar = await Persona.findByIdAndUpdate(
+        { _id: id },
+        modPersona,
+      );
+      res
+        .status(200)
+        .send({ message: "Datos actualizados correctamente" }, modificar);
+    } catch (error) {
+      return console.log(error.error);
+    }
+  };
+
+  static subirAvatar = async (req, res) => {
+    try {
+      if (!req.file) {
+        return res.status(400).json({ message: "No se envió imagen" });
+      }
+
+      const result = await new Promise((resolve, reject) => {
+        const uploadStream = cloudinary.uploader.upload_stream(
+          { folder: 'bibliotec/avatares' },
+          (error, result) => {
+            if (error) reject(error);
+            else resolve(result);
+          }
+        );
+        uploadStream.end(req.file.buffer);
+      });
+
+      // Actualizar el usuario con la nueva URL
+      const usuario = await Persona.findByIdAndUpdate(
+        req.params.id,
+        { imagen: result.secure_url },
+        { new: true }
+      );
+
+      res.status(200).json({ url: result.secure_url, usuario });
+    } catch (error) {
+      res.status(500).json({ message: "Error al subir avatar", error: error.message });
+    }
+  };
+}
+
+module.exports = PersonaController;
