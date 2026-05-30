@@ -1,0 +1,28 @@
+@"
+# Secretos
+.env
+.env.local
+.env.*.local
+
+# Dependencias
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+package-lock.json
+
+# Frontend (NO subir)
+BIBLIOTEC/
+Bibliotec/
+
+# Build outputs
+dist/
+build/
+coverage/
+
+# Sistema/IDE
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+"@ | Out-File -FilePath .gitignore -Encoding utf8
