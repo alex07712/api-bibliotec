@@ -12,15 +12,12 @@ const PersonaSchema = mongoose.Schema({
 }, { timestamps: true });
 
 // Hashear contraseña antes de guardar
-PersonaSchema.pre('save', async function(next) {
-  if (!this.isModified('password')) return next();
-  try {
-    const salt = await bcrypt.genSalt(10);
-    this.password = await bcrypt.hash(this.password, salt);
-    next();
-  } catch (error) {
-    next(error);
-  }
+PersonaSchema.pre('save', async function() {
+  if (!this.isModified('password')) return;
+  
+  const salt = await bcrypt.genSalt(10);
+  this.password = await bcrypt.hash(this.password, salt);
+  // Si hay error, la promesa se rechaza automáticamente y Mongoose lo maneja
 });
 
 //compara contraseña
@@ -30,3 +27,4 @@ PersonaSchema.methods.comparePassword = async function(candidatePassword) {
 
 
 module.exports = mongoose.model("persona", PersonaSchema);
+
