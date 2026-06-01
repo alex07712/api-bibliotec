@@ -11,7 +11,7 @@ const PersonaSchema = mongoose.Schema({
   imagen: { type: String, default: "" }
 }, { timestamps: true });
 
-//hashear password antes de guardar 
+// Hashear contraseña antes de guardar
 PersonaSchema.pre('save', async function(next) {
   if (!this.isModified('password')) return next();
   try {
