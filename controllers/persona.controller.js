@@ -6,13 +6,18 @@ class PersonaController {
   static createPersona = async (req, res) => {
     try {
       const datos = req.body;
-      const newPerson = await Persona.create(datos);
-      res.status(201).json(newPerson);
-    } catch (error) {
-      res.status(500).json({ message: "Error al crear persona", error: error.message });
-    }
-  };
-
+      if (datos.telefono) datos.telefono = Number(datos.telefono);
+    const newPerson = await Persona.create(datos);
+    res.status(201).json(newPerson);
+  } catch (error) {
+    console.error("Error createPersona:", error);
+    // Enviar mensaje detallado al cliente
+    res.status(500).json({ 
+      message: error.message,
+      details: error.errors 
+    });
+  }
+};
   static obtenerDatos = async (req, res) => {
     try {
       const buscarPersonas = await Persona.find();
