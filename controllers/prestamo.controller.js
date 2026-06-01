@@ -2,7 +2,7 @@ const Prestamo = require("../models/prestamo.model");
 const Libro = require("../models/libro.model");
 
 class PrestamoController {
-    // Crear préstamo (usando usuarioId del body, ya que no tienes JWT)
+    // Crear préstamo (usando usuarioId del body)
     static crearPrestamo = async (req, res) => {
         try {
             const { libroId, fechaDevolucionEstimada } = req.body;
