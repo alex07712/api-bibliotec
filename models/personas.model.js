@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const bcrypt = require('bcrypt'); // ✅ Ahora con 'bcrypt'
+const bcrypt = require('bcrypt');
 
 const PersonaSchema = mongoose.Schema({
   nombre:   { type: String, required: true, uppercase: true },
