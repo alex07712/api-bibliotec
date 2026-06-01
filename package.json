@@ -1,0 +1,36 @@
+{
+  "name": "api-bibliotec",
+  "version": "1.0.0",
+  "description": "es para las peticiones http para los componentes de mi app",
+  "keywords": [
+    "cors",
+    "express",
+    "nodemoon",
+    "path",
+    "mongoose"
+  ],
+  "license": "ISC",
+  "author": "All077dev",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "dependencies": {
+    "@cloudinary/react": "^1.14.4",
+    "@cloudinary/url-gen": "^1.22.0",
+    "bcryptjs": "^3.0.3",
+    "body-parser": "^2.2.2",
+    "cloudinary": "^2.10.0",
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "mongodb": "^7.2.0",
+    "mongoose": "^9.6.2",
+    "multer": "^2.1.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  }
+}
