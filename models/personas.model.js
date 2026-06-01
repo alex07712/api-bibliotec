@@ -12,10 +12,8 @@ const PersonaSchema = mongoose.Schema({
 }, { timestamps: true });
 
 //hashear password antes de guardar 
-PersonaSchema.pre('save', async function() {
-  if (!this.isModified('password')) return;
-  const salt = await bcrypt.genSalt(10);
-  this.password = await bcrypt.hash(this.password, salt);
+PersonaSchema.pre('save', async function(next) {
+  if (!this.isModified('password')) return next();
   try {
     const salt = await bcrypt.genSalt(10);
     this.password = await bcrypt.hash(this.password, salt);
