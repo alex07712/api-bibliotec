@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const bcrypt = require('bcryptjs');
+const bcrypt = require('bcrypt'); // ✅ Ahora con 'bcrypt'
 
 const PersonaSchema = mongoose.Schema({
   nombre:   { type: String, required: true, uppercase: true },
@@ -8,25 +8,19 @@ const PersonaSchema = mongoose.Schema({
   nomuser:  String,
   password: { type: String, required: true },
   rol:      { type: String, enum: ['admin', 'usuario'], default: 'usuario' },
-  imagen: { type: String, default: "" }
+  imagen:   { type: String, default: "" }
 }, { timestamps: true });
 
-// Hashear contraseña antes de guardar
-PersonaSchema.pre('save', async function(next) {
-  if (!this.isModified('password')) return next();
-  try {
-    const salt = await bcrypt.genSalt(10);
-    this.password = await bcrypt.hash(this.password, salt);
-    next();
-  } catch (error) {
-    next(error);
-  }
+PersonaSchema.pre('save', async function() {
+  if (!this.isModified('password')) return;
+  
+  const salt = await bcrypt.genSalt(10);
+  this.password = await bcrypt.hash(this.password, salt);
 });
 
-//compara contraseña
+
 PersonaSchema.methods.comparePassword = async function(candidatePassword) {
   return await bcrypt.compare(candidatePassword, this.password);
 };
-
 
 module.exports = mongoose.model("persona", PersonaSchema);

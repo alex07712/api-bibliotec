@@ -1,6 +1,6 @@
 const Persona = require("../models/personas.model");
 const cloudinary = require('../config/cloudinary');
-const bcrypt = require('bcryptjs');
+const bcrypt = require('bcrypt');
 
 class PersonaController {
   static createPersona = async (req, res) => {
