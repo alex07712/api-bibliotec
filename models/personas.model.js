@@ -3,9 +3,9 @@ const bcrypt = require('bcrypt');
 
 const PersonaSchema = mongoose.Schema({
   nombre:   { type: String, required: true, uppercase: true },
-  telefono: { type: Number, default: 9999999999, unique: true},
+  telefono: { type: Number, default: 9999999999},
   correo:   { type: String, required: true, unique: true },
-  nomuser:  {String, unique: true},
+ nomuser: {type: String, unique: true },
   password: { type: String, required: true },
   rol:      { type: String, enum: ['admin', 'usuario'], default: 'usuario' },
   imagen:   { type: String, default: "" }
